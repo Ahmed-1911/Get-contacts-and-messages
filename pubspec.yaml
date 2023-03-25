@@ -25,6 +25,8 @@ dependencies:
   rename: ^2.1.1
   flutter_contacts: ^1.1.6
   telephony: ^0.2.0
+  device_info_plus: ^8.1.0
+  mac_address: ^1.0.0
   icons_launcher: ^2.1.0
 
 icons_launcher:

