@@ -25,8 +25,8 @@ class ViewFunctions {
                 : Container(
                     height: 22.0,
                   ),
-            SizedBox(
-              width: 10.w,
+            const SizedBox(
+              width: 10,
             ),
             Expanded(
               child: Text(

